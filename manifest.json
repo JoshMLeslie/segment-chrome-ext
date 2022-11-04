@@ -1,17 +1,19 @@
 {
-  "name": "Segment Event Tracker",
-  "manifest_version": 2,
-  "version": "2.2",
+  "name": "Segment Event Tracker Custom",
+  "manifest_version": 3,
+  "version": "3.0",
   "description": "See when Segment and Dreamdata events are being tracked.",
   "permissions": [
-  	"<all_urls>",
-    "http://*/*",
-    "https://*/*",
   	"webRequest",
     "webRequestBlocking",
     "storage"
   ],
-  "browser_action": {
+  "host_permissions": [
+  	"<all_urls>",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
     "default_icon": "logo.png",
     "default_popup": "popup.html"
   },
@@ -21,9 +23,6 @@
     "128": "logo.png"
   },
   "background": {
-	"scripts": [
-		"background.js"
-	],
-	"persistent": true
+	  "service_worker": "background.js"
   }
 }

@@ -53,8 +53,8 @@ function clearTabLog() {
 	});
 }
 
-var port = chrome.extension.connect({
-	name: "trackPopup"
+var port = chrome.runtime.connect({
+	extensionId: "trackPopup"
 });
 
 queryForUpdate();
