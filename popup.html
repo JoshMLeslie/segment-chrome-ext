@@ -4,16 +4,23 @@
 <script src="popup.js"></script>
 </head>
 <body style="width: 700px">
-	<img class="logo" src="logo32.png">
-	<h1>Events tracked to Segment</h1>
-	<input type="text" id="filterInput" placeholder="Filter Events">
-	<input type="button" id="configureButton" value="Configure">
+	<div id="header">
+		<div id="header-title">
+			<img class="logo" src="logo32.png">
+			<h1>Segment Events</h1>
+		</div>
+		<div class="header-actions">
+			<input type="text" id="filterInput" placeholder="Filter Events">
+			<button type="button" id="inlineButton">Inline</button>
+			<button type="button" id="configButton">Config</button>
+		</div>
+	</div>
 	<div id="contentDiv">
 		<div id="trackMessages">
 			Events will be here
 		</div>
 		<div class="buttonDiv">
-			<input type="button" id="clearButton" value="Clear log from this tab">
+			<button type="button" id="clearButton">Clear logs</button>
 		</div>
 	</div>
 	<div id="configurationDiv" class="configurationDiv" hidden="hidden">

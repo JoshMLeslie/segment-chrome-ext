@@ -18,21 +18,17 @@ body {
 	background: #52BD95; 
 	border-radius: 5px;
 }
-#filterInput {
-	position: absolute;
-	right: 110px;
-	top: 20px;
-	height: 35px;
-    background-color: #FFFFFF;
-    border-radius: 4px;
-    border-color: #1D1D1B;
+#header-actions input,
+#header-actions button {
+	border-radius: 4px;
+	border-color: #1D1D1B;
 }
-#configureButton {
-	position: absolute;
-	right: 20px;
-	top: 20px;
+#header-actions input {
+	height: 35px;
+	background-color: #FFFFFF;
+}
+#header-actions button {
 	background-color: #1D1D1B;
-    border-radius: 4px;
 	color: #FFFFFF;
 }
 .configurationDiv {
@@ -125,4 +121,8 @@ input[type=button]:hover {
 }
 .eventType_batch {
 	background-color: #b890b5;
+}
+#header {
+	display: flex;
+	justify-content: space-between;
 }
