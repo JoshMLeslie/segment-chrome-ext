@@ -1,5 +1,4 @@
 var apiDomainDefault = 'api.segment.io,cdn.dreamdata.cloud';
-var inlineMessages = false;
 
 function showEvent(number) {
 	document.getElementById('eventContent_' + number).style.display = 'block';
@@ -144,27 +143,9 @@ function handleApiDomainUpdates() {
 	});
 }
 
-function toggleInlineMessages() {
-	console.log(inlineMessages)
-	inlineMessages = !inlineMessages;
-	if (inlineMessages) {
-
-	} else {
-		var bodyContent = document.body.innerHTML;
-		document.body.innerHTML = `
-			<div class="SEGMENT_inline-wrapper"><div class="SEGMENT_inline-messages"></div><div class="SEGMENT_site-content">${
-				bodyContent
-			}</div></div>
-		`
-	}
-}
-
 document.addEventListener('DOMContentLoaded', function() {
 	var clearButton = document.getElementById('clearButton');
 	clearButton.onclick = clearTabLog;
-
-	var inlineButton = document.getElementById('inlineButton');
-	inlineButton.onclick = toggleInlineMessages;
 
 	var filterInput = document.getElementById('filterInput');
 	filterInput.onkeyup = filterEvents;
