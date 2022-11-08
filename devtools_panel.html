@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+<script src="devtools_panel.js"></script>
+<body>
+	<div id="header">
+		<div id="header-title">
+			<img class="logo" src="logo32.png">
+			<h1>Segment Events</h1>
+		</div>
+		<div class="header-actions">
+			<input type="text" id="filterInput" placeholder="Filter Events">
+			<button type="button" id="configButton">Config</button>
+		</div>
+	</div>
+	<div id="contentDiv">
+		<div id="trackMessages">
+			Events will be here
+		</div>
+		<div class="buttonDiv">
+			<button type="button" id="clearButton">Clear logs</button>
+		</div>
+	</div>
+	<div id="configurationDiv" class="configurationDiv" hidden="hidden">
+		API domains - comma separated list of domains used for Segment and Dreamdata events publishing
+		<textarea id="apiDomain" value="api.segment.io,cdn.dreamdata.cloud" placeholder="api.segment.io,cdn.dreamdata.cloud" rows="3">
+	</div>
+</body>
+</head>

@@ -7,24 +7,20 @@ function printVariable(jsonObject,level) {
 	var returnString = '';
 	for (var key in jsonObject) {
 		if (jsonObject.hasOwnProperty(key)) {
-			returnString += '<div style="padding-left: ' + (level * 10) + 'px;">';
-			returnString += '<span class="key">';
-			returnString += key;
-			returnString += '</span>';
+			returnString += `
+			<div style="padding-left: ' + (level * 10) + 'px;">'
+				<span class="key">${key}</span>
+			`;
 
 			if (typeof jsonObject[key] == 'object') {
 				returnString += ' {' + printVariable(jsonObject[key],level + 1) + '}';
-			}
-			else {
+			} else {
 				var type = 'number';
 				if (isNaN(jsonObject[key])) {
 					type = 'string';
 				}
 
-				returnString += ': ';
-				returnString += '<span class="' + type + '">';
-				returnString += jsonObject[key];
-				returnString += '</span>';
+				returnString += `: <span class="' ${type} '">${jsonObject[key]};</span>`
 			}
 			returnString += '</div>';
 		}
@@ -58,11 +54,10 @@ var port = chrome.runtime.connect();
 queryForUpdate();
 
 chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse){
-	console.log("new event in popup")
+	console.log("new event in panel")
 	if (message.type == 'new_event') {
 		queryForUpdate();
 	}
-	return true;
 });
 
 port.onMessage.addListener((msg) => {
@@ -77,11 +72,10 @@ port.onMessage.addListener((msg) => {
 				var eventString = '';
 
 				eventString += '<div class="eventTracked eventType_' + event.type + '">';
-					eventString += '<div class="eventInfo" number="' + i + '"><span class="eventName">' + event.eventName + '</span> - ' + event.trackedTime + '<br />' + event.hostName + '</div>';
-					eventString += '<div class="eventContent" id="eventContent_' + i + '">';
-						eventString += printVariable(jsonObject,0);
-					eventString += '</div>';
-				eventString += '</div>';
+				eventString += '<div class="eventInfo" number="' + i + '"><span class="eventName">' + event.eventName + '</span> - ' + event.trackedTime + '<br />' + event.hostName + '</div>';
+				eventString += '<div class="eventContent" id="eventContent_' + i + '">';
+				eventString += printVariable(jsonObject,0);
+				eventString += '</div></div>';
 
 				prettyEventsString += eventString;
 			}

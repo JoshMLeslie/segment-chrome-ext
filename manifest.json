@@ -1,29 +1,36 @@
 {
-  "name": "Segment Event Tracker Custom",
-  "manifest_version": 3,
-  "version": "3.0",
-  "description": "See when Segment and Dreamdata events are being tracked.",
-  "permissions": [
-  	"webRequest",
-    "webRequestBlocking",
-    "storage"
-  ],
-  "host_permissions": [
-  	"<all_urls>",
-    "http://*/*",
-    "https://*/*"
-  ],
-  "action": {
-    "default_icon": "logo.png",
-    "default_popup": "popup.html"
-  },
-  "icons": {
-    "16": "logo16.png",
-    "48": "logo48.png",
-    "128": "logo.png"
-  },
-  "background": {
-	  "service_worker": "background.js"
-  },
-  "devtools_page": "devtools_index.html"
+	"name": "Segment Event Tracker Custom",
+	"manifest_version": 3,
+	"version": "3.0",
+	"description": "See when Segment and Dreamdata events are being tracked.",
+	"permissions": [
+		"declarativeNetRequest",
+		"declarativeNetRequestWithHostAccess",
+		"declarativeNetRequestFeedback",
+		"storage",
+		"activeTab",
+    "tabs",
+    "webRequest",
+    "webNavigation",
+    "management",
+    "scripting"
+	],
+	"host_permissions": ["<all_urls>"],
+	"action": {
+		"default_icon": {
+			"16": "logo16.png",
+			"48": "logo48.png",
+			"128": "logo.png"
+		},
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "logo16.png",
+		"48": "logo48.png",
+		"128": "logo.png"
+	},
+	"background": {
+		"service_worker": "background-wrapper.js"
+	},
+	"devtools_page": "devtools_index.html"
 }
