@@ -1,9 +1,9 @@
 var apiDomainDefault = 'api.segment.io,cdn.dreamdata.cloud';
 
-function showEvent(number) {
+const showEvent = (number) => {
 	document.getElementById('eventContent_' + number).style.display = 'block';
 }
-function printVariable(jsonObject,level) {
+const printVariable = (jsonObject, level) => {
 	var returnString = '';
 	for (var key in jsonObject) {
 		if (jsonObject.hasOwnProperty(key)) {
@@ -31,41 +31,41 @@ function printVariable(jsonObject,level) {
 	}
 	return returnString;
 }
-function queryForUpdate() {
+const queryForUpdate = () => {
 	chrome.tabs.query({ active: true, currentWindow: true },(tabs) => {
 		var currentTab = tabs[0];
 
-		port.postMessage({
+		connection.postMessage({
 			type: "update",
 			tabId: currentTab.id
 		});
 	});
 }
 
-function clearTabLog() {
+const clearTabLog = () => {
 	chrome.tabs.query({ active: true, currentWindow: true },(tabs) => {
 		var currentTab = tabs[0];
 
-		port.postMessage({
+		connection.postMessage({
 			type: "clear",
 			tabId: currentTab.id
 		});
 	});
 }
 
-var port = chrome.runtime.connect();
+var connection = chrome.runtime.connect();
 
 queryForUpdate();
 
-chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse){
+chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
 	console.log("new event in popup")
 	if (message.type == 'new_event') {
 		queryForUpdate();
 	}
-	return true;
 });
 
-port.onMessage.addListener((msg) => {
+connection.onMessage.addListener((msg) => {
+	console.log('popup msg', msg)
 	if (msg.type == "update") {
 		var prettyEventsString = '';
 
@@ -93,7 +93,7 @@ port.onMessage.addListener((msg) => {
 
 		var eventElements = document.getElementsByClassName("eventInfo");
 		for (var i=0;i<eventElements.length;i++) {
-			eventElements[i].onclick = function() {
+			eventElements[i].onclick = () => {
 				var number = this.getAttribute('number');
 				if (document.getElementById('eventContent_' + number).style.display == 'block') {
 					document.getElementById('eventContent_' + number).style.display = 'none';
@@ -106,7 +106,7 @@ port.onMessage.addListener((msg) => {
 	}
 });
 
-function filterEvents(keyPressedEvent) {
+const filterEvents( = keyPressedEvent) => {
 	var filter = new RegExp(keyPressedEvent.target.value, 'gi');
 	var eventElements = document.getElementById('trackMessages').getElementsByClassName('eventTracked');
 	for(eventElement of eventElements) {
@@ -119,7 +119,7 @@ function filterEvents(keyPressedEvent) {
 	}
 }
 
-function toggleConfiguration() {
+const toggleConfiguration = () => {
 	var configurationDiv = document.getElementById('configurationDiv');
 	configurationDiv.hidden = !configurationDiv.hidden;
 
@@ -127,21 +127,21 @@ function toggleConfiguration() {
 	contentDiv.hidden = !contentDiv.hidden;
 }
 
-function updateApiDomain(apiDomain) {
-	chrome.storage.local.set({segment_api_domain: apiDomain || apiDomainDefault}, function() {
+const updateApiDomain( = apiDomain) => {
+	chrome.storage.local.set({segment_api_domain: apiDomain || apiDomainDefault}, () => {
 	});
 }
 
-function handleApiDomainUpdates() {
+const handleApiDomainUpdates = () => {
 	var apiDomainInput = document.getElementById('apiDomain');
 
-	chrome.storage.local.get(['segment_api_domain'], function(result) {
+	chrome.storage.local.get(['segment_api_domain'], (result) => {
 		apiDomainInput.value = result.segment_api_domain || apiDomainDefault;
 		apiDomainInput.onchange = () => updateApiDomain(apiDomainInput.value);
 	});
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
 	var clearButton = document.getElementById('clearButton');
 	clearButton.onclick = clearTabLog;
 
