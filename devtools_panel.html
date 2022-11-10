@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
+<link rel="stylesheet" href="event.css">
 <script src="event.js"></script>
-<body>
+<body id="segment_panel">
 	<div id="header">
 		<div id="header-title">
 			<img class="logo" src="logo32.png">
@@ -10,18 +11,18 @@
 		<div class="header-actions">
 			<input type="text" id="filterInput" placeholder="Filter Events">
 			<button type="button" id="configButton">Config</button>
+			<button type="button" id="clearButton">Clear logs</button>
 		</div>
 	</div>
 	<div id="contentDiv">
 		<div id="trackMessages">
 			Events will be here
 		</div>
-		<div class="buttonDiv">
-			<button type="button" id="clearButton">Clear logs</button>
-		</div>
 	</div>
 	<div id="configurationDiv" class="configurationDiv" hidden="hidden">
-		API domains - comma separated list of domains used for Segment and Dreamdata events publishing
+		<p>
+			API domains - comma separated list of domains used for Segment and Dreamdata events publishing
+		</p>
 		<textarea id="apiDomain" value="api.segment.io,cdn.dreamdata.cloud" placeholder="api.segment.io,cdn.dreamdata.cloud" rows="3">
 	</div>
 </body>

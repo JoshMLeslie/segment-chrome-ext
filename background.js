@@ -42,13 +42,11 @@ const withOpenTab = (callback) => {
 }
 
 const addEvent = (event) => {
-	console.log(event)
 	segmentTrackedEvents.unshift(event);
 	chrome.runtime.sendMessage({type: 'new_event'});
 }
 
 const updateTrackedEventsForTab = (tabId, connection) => {
-	console.log({tabId, connection})
 	var sendEvents = [];
 
 	for (var i = 0; i < segmentTrackedEvents.length; i++) {
@@ -57,7 +55,6 @@ const updateTrackedEventsForTab = (tabId, connection) => {
 		}
 	}
 
-	console.log(sendEvents)
 	connection.postMessage({
 		type: 'update',
 		events: sendEvents,
@@ -86,10 +83,6 @@ chrome.runtime.onConnect.addListener((connection) => {
 		}
 	};
 	connection.onMessage.addListener(parser);
-
-	// connection.onDisconnect.addListener(() => {
-	// 	connection.onMessage.removeListener(parser);
-	// });
 });
 
 const isSegmentApiCall = (url) => {
