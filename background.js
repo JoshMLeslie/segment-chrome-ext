@@ -14,6 +14,14 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 	}
 });
 
+/**
+ * todo - refactor config
+ * - checkbox - clear log on page refresh 
+ * - input - update filter to be persistent
+ * - btn - ?reload frame
+ * - input - add (default)config for max event pruning to prevent overload + slowdown
+ */
+
 const zeroPad = (i) => {
 	if (i < 10) {
 		i = '0' + i;
@@ -43,7 +51,7 @@ const withOpenTab = (callback) => {
 
 const addEvent = (event) => {
 	segmentTrackedEvents.unshift(event);
-	// todo: add (default)config for max events to prevent overload + slowdown
+	// todo: max event pruning
 	chrome.runtime.sendMessage({type: 'new_event'});
 }
 
