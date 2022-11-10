@@ -3,6 +3,37 @@ var apiDomainDefault = 'api.segment.io,cdn.dreamdata.cloud';
 var connection = chrome.runtime.connect();
 var rawEvents = {};
 
+const copyToCb = async (textToCopy) => {
+	var hasPermission = false;
+	if (navigator.permissions) {
+		hasPermission = await navigator.permissions.query({
+			name: 'clipboard-write',
+		});
+	}
+	if (
+		navigator.clipboard &&
+		window.isSecureContext &&
+		hasPermission &&
+		hasPermission.state === 'granted'
+	) {
+		return navigator.clipboard.writeText(textToCopy);
+	}
+	// text area method
+	const textArea = document.createElement('textarea');
+	textArea.value = textToCopy;
+	textArea.style.position = 'fixed';
+	textArea.style.left = '-999999px';
+	textArea.style.top = '-999999px';
+
+	document.body.appendChild(textArea);
+	textArea.focus();
+	textArea.select();
+	return new Promise((res, rej) => {
+		document.execCommand('copy') ? res() : rej();
+		textArea.remove();
+	});
+};
+
 const showEvent = (number) => {
 	document.getElementById('eventContent_' + number).style.display = 'block';
 };
@@ -54,7 +85,6 @@ const clearTabLog = () => {
 queryForUpdate();
 
 chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
-	console.log('new event in panel', message, _sender, _sendResponse);
 	if (message.type == 'new_event') {
 		queryForUpdate();
 	}
@@ -62,57 +92,69 @@ chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
 
 const eventHeader = (event, i) => {
 	return (
-		`<div class="eventInfo" number="${i}">` +
+		`<div class="eventInfo eventInfo_${i}">` +
 		'<div class="eventInfoLeft">' +
 		`<span class="eventName">${event.eventName} - ${event.trackedTime}</span>` +
 		`<span class="eventHostName">${event.hostName}</span>` +
 		'</div>' +
-		'<div className="eventInfoRight">' +
+		'<div class="eventInfoRight">' +
 		`<button id="eventHeaderCopy_${i}">copy</button>` +
 		'</div>' +
 		'</div>'
 	);
 };
 
+const createEvent = (event, i) => {
+	var jsonObject = JSON.parse(event.raw);
+	return (
+		`<div class="eventTracked eventType_${event.type}">` +
+		eventHeader(event, i) +
+		`<div class="eventContent" id="eventContent_${i}">` +
+		printVariable(jsonObject, 0) +
+		'</div></div>'
+	);
+};
+
+const updateEvents = (events) => {
+	if (!events.length) {
+		return 'No events tracked in this tab yet!';
+	}
+	var eventsHtmlString = '';
+	for (var i = 0; i < events.length; i++) {
+		eventsHtmlString += createEvent(events[i], i);
+	}
+	return eventsHtmlString;
+};
+
 connection.onMessage.addListener((msg) => {
 	if (msg.type == 'update') {
-		var prettyEventsString = '';
-
-		if (msg.events.length > 0) {
-			for (var i = 0; i < msg.events.length; i++) {
-				var event = msg.events[i];
-
-				var jsonObject = JSON.parse(event.raw);
-
-				var eventString =
-					`<div class="eventTracked eventType_${event.type}">` +
-					eventHeader(event, i) +
-					`<div class="eventContent" id="eventContent_${i}">` +
-					printVariable(jsonObject, 0) +
-					'</div></div>';
-
-				prettyEventsString += eventString;
-			}
-		} else {
-			prettyEventsString += 'No events tracked in this tab yet!';
-		}
-		document.getElementById('trackMessages').innerHTML = prettyEventsString;
+		document.getElementById('trackMessages').innerHTML = updateEvents(
+			msg.events
+		);
 
 		// todo: refactor
 		if (msg.events.length > 0) {
 			for (var i = 0; i < msg.events.length; i++) {
-				document
-					.getElementById(`eventHeaderCopy_${i}`)
-					.addEventListener('click', (e) => {
-						e.preventDefault();
-						window.navigator.copyToClipboard(JSON.parse(msg.events[i - 1].raw));
-						window.alert("contents copied")
-					});
+				const el = document.getElementById(`eventHeaderCopy_${i}`);
+				el.addEventListener('click', (e) => {
+					e.preventDefault();
+					const parent = el.parentElement.parentElement.parentElement;
+					copyToCb(msg.events[i - 1].raw)
+						.then(() => {
+							parent.style.border = '4px solid green';
+						})
+						.catch(() => {
+							parent.style.border = '4px solid red';
+						})
+						.finally(() => {
+							setTimeout(() => (parent.style.border = ''), 1000);
+						});
+				});
 			}
 		}
 
 		// register click handlers for expansion of content
-		var eventElements = document.getElementsByClassName('eventInfo');
+		var eventElements = document.getElementsByClassName('eventInfoLeft');
 		Array.from(eventElements).forEach((el, i) => {
 			var handleClick = () => {
 				var el = document.getElementById('eventContent_' + i);

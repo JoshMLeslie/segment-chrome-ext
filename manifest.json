@@ -13,7 +13,9 @@
     "webRequest",
     "webNavigation",
     "management",
-    "scripting"
+    "scripting",
+		"contextMenus",
+		"clipboardWrite"
 	],
 	"host_permissions": ["<all_urls>"],
 	"action": {
