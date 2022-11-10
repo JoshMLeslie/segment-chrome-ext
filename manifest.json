@@ -1,5 +1,5 @@
 {
-	"name": "Segment Event Tracker Custom",
+	"name": "Segment Event Tracker",
 	"manifest_version": 3,
 	"version": "3.0",
 	"description": "See when Segment and Dreamdata events are being tracked.",
