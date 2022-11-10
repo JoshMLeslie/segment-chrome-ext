@@ -43,6 +43,7 @@ const withOpenTab = (callback) => {
 
 const addEvent = (event) => {
 	segmentTrackedEvents.unshift(event);
+	// todo: add (default)config for max events to prevent overload + slowdown
 	chrome.runtime.sendMessage({type: 'new_event'});
 }
 

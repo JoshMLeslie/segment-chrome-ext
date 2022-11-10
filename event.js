@@ -1,7 +1,5 @@
 var apiDomainDefault = 'api.segment.io,cdn.dreamdata.cloud';
-
 var connection = chrome.runtime.connect();
-var rawEvents = {};
 
 const copyToCb = async (textToCopy) => {
 	var hasPermission = false;
