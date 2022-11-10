@@ -1,5 +1,13 @@
+
+:root {
+	--sm: 0.25rem;
+	--md: 0.5rem;
+	--def: 1rem;
+	--lg: 2rem;
+}
+
 body {
-	padding: 10px;
+	padding: var(--md);
 	overflow: hidden;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
@@ -8,37 +16,53 @@ body {
 #header {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	gap: var(--md);
 }
-#header .logo {
-	height: 32px;
-	width: 32px;
-	margin-right: 10px;
-}
-#header-title {
+
+#header-input {
 	display: flex;
+	align-items: center;
 }
-#header-actions input,
-#header-actions button {
-	border-radius: 4px;
+#header-input input {
+	height: var(--lg);
+	border-radius: var(--sm);
 	border-color: #1D1D1B;
-}
-#header-actions input {
-	height: 35px;
 	background-color: #FFFFFF;
+}
+#header-input .logo {
+	height: var(--lg);
+	width: var(--lg);
+	margin-right: var(--sm);
+}
+
+#header-actions {
+	display: flex;
+	flex-direction: column;
+}
+#header-actions *:not(:last-child) {
+	margin-bottom: var(--sm);
 }
 #header-actions button {
 	background-color: #1D1D1B;
 	color: #FFFFFF;
-
-	border-width: 0px;
+	width: 100%;
+	max-width: 88px;
+	border: none;
 	background-color: #52BD95;
-	transition: background-color 0.5s;
-	border-radius: 4px;
+	border-radius: var(--sm);
 	color: #FFFFFF;
-	padding: 10px;
+	padding: var(--md);
+	transition: background-color 0.5s;
 }
 #header-actions button:hover {
 	background-color: #068465;
+}
+
+#header-title {
+	font-size: 26px;
+	font-weight: normal;
+	margin: 0px;
 }
 /* END HEADER */
 
@@ -50,12 +74,12 @@ body {
 	display: none;
 }
 .eventTracked:first-of-type {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
+	border-top-left-radius: var(--sm);
+	border-top-right-radius: var(--sm);
 }
 .eventTracked:last-of-type {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: var(--sm);
+	border-bottom-right-radius: var(--sm);
 }
 
 .eventInfo {
@@ -70,10 +94,10 @@ body {
 	display: flex;
 	flex-direction: column;
 	max-width: 75%;
-	padding: 0.5rem;
+	padding: var(--md);
 }
 .eventInfoRight {
-	padding: 0.5rem;
+	padding: var(--md);
 }
 .eventName {
 	color: #FFFFFF;
@@ -87,11 +111,11 @@ body {
 }
 .eventContent {
 	display: none;
-	font-size: 14px;
+	font-size: 1var(--sm);
 	background-color: #FFFFFF;
-	padding: 10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	padding: var(--md);
+	margin-top: var(--md);
+	margin-bottom: var(--md);
 	overflow-y: auto;
 	height: 400px;
 	border: 1px solid #DDDDDD;
@@ -107,7 +131,7 @@ body {
 }
 .eventContent::-webkit-scrollbar-thumb {
 	background-color: rgb(53, 36, 70); 
-	border-radius: 5px;
+	border-radius: var(--sm);
 }
 .eventType_identify {
 	background-color: #52BD95;
@@ -130,7 +154,7 @@ body {
 /* MESSAGES */
 #trackMessages {
 	overflow: auto;
-	font-size: 14px;
+	font-size: var(--def);
 }
 #trackMessages::-webkit-scrollbar {
 	width: 12px;
@@ -151,14 +175,8 @@ body {
 .null { color: magenta; }
 .key { color: black; font-weight: bold; }
 
-
-h1 {
-    font-size: 26px;
-    font-weight: normal;
-    margin-top: 0px;
-}
 .buttonDiv {
-	padding-top: 10px;
+	padding-top: var(--md);
 	text-align: right;
 }
 
@@ -167,7 +185,7 @@ h1 {
 }
 #apiDomain {
 	width: 100%;
-	margin-top: 10px;
+	margin-top: var(--md);
 }
 /* END MISC */
 
