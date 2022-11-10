@@ -94,8 +94,11 @@ body {
 .eventInfoLeft {
 	display: flex;
 	flex-direction: column;
-	max-width: 75%;
+	width: 75%;
 	padding: var(--md);
+}
+.eventInfoLeft:hover {
+	opacity: 0.5;
 }
 .eventInfoRight {
 	padding: var(--md);
