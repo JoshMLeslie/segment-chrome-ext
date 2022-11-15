@@ -207,16 +207,31 @@ const handleApiDomainUpdates = () => {
 	});
 };
 
+const reloadView = () => {
+	window.location.reload();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 	var clearButton = document.getElementById('clearButton');
-	clearButton.onclick = clearTabLog;
+	if (clearButton) {
+		clearButton.addEventListener('click', clearTabLog);
+	}
+
+	var reloadButton = document.getElementById('reloadButton');
+	if (reloadButton) {
+		reloadButton.addEventListener('click', reloadView);
+	}
 
 	var filterInput = document.getElementById('filterInput');
-	filterInput.onkeyup = filterEvents;
-	filterInput.focus();
+	if (filterInput) {
+		filterInput.onkeyup = filterEvents;
+		filterInput.focus();
+	}
 
 	var configButton = document.getElementById('configButton');
-	configButton.onclick = toggleConfiguration;
+	if (configButton) {
+		configButton.addEventListener('click', toggleConfiguration);
+	}
 
 	handleApiDomainUpdates();
 });

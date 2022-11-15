@@ -38,11 +38,11 @@ body {
 }
 
 #header-actions {
+	width: 100%;
 	display: flex;
-	flex-direction: column;
-}
-#header-actions *:not(:last-child) {
-	margin-bottom: var(--sm);
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: var(--sm);
 }
 #header-actions button {
 	background-color: #1D1D1B;
