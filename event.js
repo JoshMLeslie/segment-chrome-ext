@@ -193,7 +193,7 @@ const toggleConfiguration = () => {
 
 const updateApiDomain = (apiDomain) => {
 	chrome.storage.local.set(
-		{segment_api_domain: apiDomain || apiDomainDefault},
+		{segmentApiDomain: apiDomain || apiDomainDefault},
 		() => {}
 	);
 };
@@ -201,8 +201,8 @@ const updateApiDomain = (apiDomain) => {
 const handleApiDomainUpdates = () => {
 	var apiDomainInput = document.getElementById('apiDomain');
 
-	chrome.storage.local.get(['segment_api_domain'], (result) => {
-		apiDomainInput.value = result.segment_api_domain || apiDomainDefault;
+	chrome.storage.local.get(['segmentApiDomain'], (result) => {
+		apiDomainInput.value = result.segmentApiDomain || apiDomainDefault;
 		apiDomainInput.onchange = () => updateApiDomain(apiDomainInput.value);
 	});
 };
